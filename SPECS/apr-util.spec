@@ -16,7 +16,7 @@
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Version: 1.6.1
-Release: 6%{?dist}.1
+Release: 9%{?dist}
 License: ASL 2.0
 Group: System Environment/Libraries
 URL: http://apr.apache.org/
@@ -24,6 +24,8 @@ Source0: http://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
 Patch1: apr-util-1.2.7-pkgconf.patch
 Patch4: apr-util-1.4.1-private.patch
 Patch5: apr-util-mariadb-upstream.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=2063562
+Patch6: apr-util-1.6.1-r1907242+.patch
 
 # Security patches:
 # https://bugzilla.redhat.com/show_bug.cgi?id=2169652
@@ -137,6 +139,7 @@ This package provides the NSS crypto support for the apr-util.
 %patch1 -p1 -b .pkgconf
 %patch4 -p1 -b .private
 %patch5 -p1 -b .maria
+%patch6 -p1 -b .r1907242
 
 %patch100 -p1 -b .CVE-2022-25147
 
@@ -248,9 +251,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/aclocal/*.m4
 
 %changelog
-* Tue May 09 2023 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-6.1
-- Resolves: #2196572 - CVE-2022-25147 apr-util: out-of-bounds writes
-  in the apr_base64
+* Tue Jun 27 2023 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-9
+- Related: #2063562 - mod_auth_openidc fails with IPv6 OIDCMemCacheServers
+
+* Mon Jun 12 2023 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-8
+- Resolves: #2063562 - mod_auth_openidc fails with IPv6 OIDCMemCacheServers
+
+* Wed May 31 2023 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-7
+- Resolves: #2196573 - CVE-2022-25147 apr-util: out-of-bounds writes in the apr_base64
 
 * Mon Oct  1 2018 Joe Orton <jorton@redhat.com> - 1.6.1-6
 - Recommends: apr-util-openssl, apr-util-bdb (#1633973)
