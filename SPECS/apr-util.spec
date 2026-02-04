@@ -37,7 +37,7 @@
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Version: 1.6.3
-Release: 21%{?dist}
+Release: 23%{?dist}
 # Apache-2.0:  everything
 # RSA-MD:      https://gitlab.com/fedora/legal/fedora-legal-docs/-/merge_requests/187
 #              include\apr_md5.h, passwd\apr_md5.c, crypto\apr_md4.c, include\apr_md4.h
@@ -57,6 +57,7 @@ Patch6: apr-util-1.6.3-r1908584.patch
 Patch7: apr-util-1.6.3-r1908585.patch
 Patch8: apr-util-1.6.3-r1908586.patch
 Patch9: apr-util-1.6.3-drop-engine-headers.patch
+Patch10: apr-util-1.6.3-r1928729.patch
 BuildRequires: gcc
 BuildRequires: autoconf, apr-devel >= 1.3.0
 BuildRequires: %{dbdep}, expat-devel, libuuid-devel
@@ -283,6 +284,9 @@ export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}/apr-util-%{apuver}
 %{_datadir}/aclocal/*.m4
 
 %changelog
+* Fri Dec 05 2025 Luboš Uhliarik <luhliari@redhat.com> - 1.6.3-23
+- Resolves: RHEL-117419 - apr-util lmdb prevent htdbm to remove user
+
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 1.6.3-21
 - Bump release for October 2024 mass rebuild:
   Resolves: RHEL-64018
