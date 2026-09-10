@@ -37,7 +37,7 @@
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Version: 1.6.3
-Release: 23%{?dist}
+Release: 23%{?dist}.1
 # Apache-2.0:  everything
 # RSA-MD:      https://gitlab.com/fedora/legal/fedora-legal-docs/-/merge_requests/187
 #              include\apr_md5.h, passwd\apr_md5.c, crypto\apr_md4.c, include\apr_md4.h
@@ -58,6 +58,19 @@ Patch7: apr-util-1.6.3-r1908585.patch
 Patch8: apr-util-1.6.3-r1908586.patch
 Patch9: apr-util-1.6.3-drop-engine-headers.patch
 Patch10: apr-util-1.6.3-r1928729.patch
+# https://issues.redhat.com/browse/RHEL-235667
+# https://github.com/apache/apr-util/commit/414e12e427c89f135d8ee66ab1203feffd3e2bd8
+Patch11: apr-util-1.6.3-CVE-2026-32327.patch
+# https://issues.redhat.com/browse/RHEL-236469
+# https://github.com/apache/apr-util/commit/e8f36bd5f1cc1c82bed1ae52d5699a4c610251c2
+Patch12: apr-util-1.6.3-CVE-2026-34501.patch
+# https://issues.redhat.com/browse/RHEL-236264
+# https://github.com/apache/apr-util/commit/f1c98dd0847c43375daf3789c936685adbc6d872
+# https://github.com/apache/apr-util/commit/997c02ce5b9db44083c580e3e47095f5ac4524ae
+Patch13: apr-util-1.6.3-CVE-2026-34502.patch
+# https://issues.redhat.com/browse/RHEL-236629
+# https://github.com/apache/apr-util/commit/f77a20761cb15686f8d4de5b5eafc534ae24b19e
+Patch14: apr-util-1.6.3-CVE-2025-49506.patch
 BuildRequires: gcc
 BuildRequires: autoconf, apr-devel >= 1.3.0
 BuildRequires: %{dbdep}, expat-devel, libuuid-devel
@@ -284,6 +297,16 @@ export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}/apr-util-%{apuver}
 %{_datadir}/aclocal/*.m4
 
 %changelog
+* Wed Sep 02 2026 Luboš Uhliarik <luhliari@redhat.com> - 1.6.3-23.1
+- Resolves: RHEL-236629 - apr-util: Apache Portable Runtime Utility: Information
+  disclosure via timing attack in password validation (CVE-2025-49506)
+- Resolves: RHEL-236264 - apr-util: Apache Portable Runtime Utility: Heap buffer
+  overflow in APR memcached client (CVE-2026-34502)
+- Resolves: RHEL-236469 - apr-util: Apache Portable Runtime Utility: Heap buffer
+  overflow in redis client (CVE-2026-34501)
+- Resolves: RHEL-235667 - apr-util: APR-util: Denial of Service via XML stack
+  recursion attack (CVE-2026-32327)
+
 * Fri Dec 05 2025 Luboš Uhliarik <luhliari@redhat.com> - 1.6.3-23
 - Resolves: RHEL-117419 - apr-util lmdb prevent htdbm to remove user
 
