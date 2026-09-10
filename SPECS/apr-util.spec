@@ -16,7 +16,7 @@
 Summary: Apache Portable Runtime Utility library
 Name: apr-util
 Version: 1.6.1
-Release: 23%{?dist}
+Release: 23%{?dist}.1
 License: ASL 2.0
 URL: https://apr.apache.org/
 Source0: https://www.apache.org/dist/apr/%{name}-%{version}.tar.bz2
@@ -29,6 +29,19 @@ Patch6: apr-util-1.6.3-r1907242+.patch
 # Security patches:
 # https://bugzilla.redhat.com/show_bug.cgi?id=2169652
 Patch100: apr-util-1.6.1-CVE-2022-25147.patch
+# https://issues.redhat.com/browse/RHEL-235670
+# https://github.com/apache/apr-util/commit/414e12e427c89f135d8ee66ab1203feffd3e2bd8
+Patch101: apr-util-1.6.1-CVE-2026-32327.patch
+# https://issues.redhat.com/browse/RHEL-236478
+# https://github.com/apache/apr-util/commit/e8f36bd5f1cc1c82bed1ae52d5699a4c610251c2
+Patch102: apr-util-1.6.1-CVE-2026-34501.patch
+# https://issues.redhat.com/browse/RHEL-236266
+# https://github.com/apache/apr-util/commit/f1c98dd0847c43375daf3789c936685adbc6d872
+# https://github.com/apache/apr-util/commit/997c02ce5b9db44083c580e3e47095f5ac4524ae
+Patch103: apr-util-1.6.1-CVE-2026-34502.patch
+# https://issues.redhat.com/browse/RHEL-236631
+# https://github.com/apache/apr-util/commit/f77a20761cb15686f8d4de5b5eafc534ae24b19e
+Patch104: apr-util-1.6.1-CVE-2025-49506.patch
 
 BuildRequires: gcc
 BuildRequires: autoconf, apr-devel >= 1.3.0
@@ -136,6 +149,10 @@ This package provides the NSS crypto support for the apr-util.
 %patch6 -p1 -b .r1907242
 
 %patch100 -p1 -b .CVE-2022-25147
+%patch101 -p1 -b .CVE-2026-32327
+%patch102 -p1 -b .CVE-2026-34501
+%patch103 -p1 -b .CVE-2026-34502
+%patch104 -p1 -b .CVE-2025-49506
 
 %build
 autoheader && autoconf
@@ -230,6 +247,16 @@ export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}/apr-util-%{apuver}
 %{_datadir}/aclocal/*.m4
 
 %changelog
+* Thu Sep 03 2026 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-23.1
+- Resolves: RHEL-236631 - apr-util: Apache Portable Runtime Utility: Information
+  disclosure via timing attack in password validation (CVE-2025-49506)
+- Resolves: RHEL-236266 - apr-util: Apache Portable Runtime Utility: Heap buffer
+  overflow in APR memcached client (CVE-2026-34502)
+- Resolves: RHEL-236478 - apr-util: Apache Portable Runtime Utility: Heap buffer
+  overflow in redis client (CVE-2026-34501)
+- Resolves: RHEL-235670 - apr-util: APR-util: Denial of Service via XML stack
+  recursion attack (CVE-2026-32327)
+
 * Tue Jun 27 2023 Luboš Uhliarik <luhliari@redhat.com> - 1.6.1-23
 - Related: #2168760 - mod_auth_openidc fails with IPv6 OIDCMemCacheServers
 
